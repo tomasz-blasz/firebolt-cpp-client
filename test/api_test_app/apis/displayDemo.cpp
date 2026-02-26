@@ -28,6 +28,7 @@ using namespace Firebolt::Display;
 DisplayDemo::DisplayDemo()
     : DemoBase("Display")
 {
+    methods_.push_back("Display.edid");
     methods_.push_back("Display.maxResolution");
     methods_.push_back("Display.size");
 }
@@ -35,7 +36,15 @@ DisplayDemo::DisplayDemo()
 void DisplayDemo::runOption(const std::string& method)
 {
     std::cout << "Running Display method: " << method << std::endl;
-    if (method == "Display.maxResolution")
+    if (method == "Display.edid")
+    {
+        auto r = Firebolt::IFireboltAccessor::Instance().DisplayInterface().edid();
+        if (succeed(r))
+        {
+            std::cout << "EDID: " << *r << std::endl;
+        }
+    }
+    else if (method == "Display.maxResolution")
     {
         auto r = Firebolt::IFireboltAccessor::Instance().DisplayInterface().maxResolution();
         if (succeed(r))

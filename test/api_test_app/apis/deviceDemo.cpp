@@ -33,6 +33,7 @@ DeviceDemo::DeviceDemo()
 {
     methods_.push_back("Device.chipsetId");
     methods_.push_back("Device.deviceClass");
+    methods_.push_back("Device.hdr");
     methods_.push_back("Device.timeInActiveState");
     methods_.push_back("Device.uid");
     methods_.push_back("Device.uptime");
@@ -57,6 +58,15 @@ void DeviceDemo::runOption(const std::string& method)
         {
             std::cout << "Device Class: " << Firebolt::JSON::toString(Firebolt::Device::JsonData::DeviceClassEnum, *r)
                       << std::endl;
+        }
+    }
+    else if (method == "Device.hdr")
+    {
+        auto r = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdr();
+        if (succeed(r))
+        {
+            std::cout << "HDR: {" << std::boolalpha << r->hdr10 << ", " << r->hdr10Plus << ", " << r->dolbyVision
+                      << ", " << r->hlg << "}" << std::endl;
         }
     }
     else if (method == "Device.timeInActiveState")
