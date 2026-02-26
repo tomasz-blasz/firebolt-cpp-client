@@ -1,0 +1,5 @@
+Accessibility.highContrastUI
+Device.chipsetId
+TextToSpeech.speak
+TextToSpeech.listVoices
+TextToSpeech.pause

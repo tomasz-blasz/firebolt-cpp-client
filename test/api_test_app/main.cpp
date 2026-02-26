@@ -33,6 +33,7 @@
 #include <cstdlib>
 #include <future>
 #include <ios>
+#include <unistd.h>
 
 int main(int argc, char** argv)
 {
@@ -136,7 +137,36 @@ int main(int argc, char** argv)
     interfaces.emplace_back(std::make_unique<StatsDemo>());
     interfaces.emplace_back(std::make_unique<TextToSpeechDemo>());
 
-    if (appConfig.autoRun)
+    if (!isatty(fileno(stdin)))
+    {
+        appConfig.autoRun = true;
+        std::string line;
+        while (std::getline(std::cin, line))
+        {
+            bool found = false;
+            for (const auto& interface : interfaces)
+            {
+                for (const auto& method : interface->methods())
+                {
+                    if (method == line)
+                    {
+                        interface->runOption(method);
+                        found = true;
+                        break;
+                    }
+                }
+                if (found)
+                {
+                    break;
+                }
+            }
+            if (!found)
+            {
+                std::cout << "Method not found: " << line << std::endl;
+            }
+        }
+    }
+    else if (appConfig.autoRun)
     {
         for (auto& interface : interfaces)
         {
