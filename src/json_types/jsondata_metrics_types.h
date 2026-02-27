@@ -18,14 +18,16 @@
 
 #pragma once
 
-#include "firebolt/discovery.h"
+#include "firebolt/metrics.h"
 #include <firebolt/json_types.h>
 
-namespace Firebolt::Discovery::JsonData
+namespace Firebolt::Metrics::JsonData
 {
-inline const Firebolt::JSON::EnumType<::Firebolt::Discovery::AgePolicy> AgePolicyEnum({
-    {"app:adult", ::Firebolt::Discovery::AgePolicy::ADULT},
-    {"app:child", ::Firebolt::Discovery::AgePolicy::CHILD},
-    {"app:teen", ::Firebolt::Discovery::AgePolicy::TEEN},
+inline const Firebolt::JSON::EnumType<::Firebolt::Metrics::ErrorType> ErrorTypeEnum({
+    {"network", ::Firebolt::Metrics::ErrorType::Network},
+    {"media", ::Firebolt::Metrics::ErrorType::Media},
+    {"restriction", ::Firebolt::Metrics::ErrorType::Restriction},
+    {"entitlement", ::Firebolt::Metrics::ErrorType::Entitlement},
+    {"other", ::Firebolt::Metrics::ErrorType::Other},
 });
-} // namespace Firebolt::Discovery::JsonData
+} // namespace Firebolt::Metrics::JsonData
